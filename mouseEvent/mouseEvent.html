@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MouseEvent</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500" style="background:#000">
+        <p>you browser not support canvas!</p>
+    </canvas>
+    <script src="../utils/utils.js"></script>
+    <script>
+        // window.onload = function() {
+        //     var canvas = document.getElementById('canvas'),
+        //         mouse = new Utils().captureMouse(canvas);
+            
+        //     canvas.addEventListener('mousedown', event => {
+        //         console.log('x:'+mouse.x + ',y:'+mouse.y);
+        //     });
+        // }
+
+        // getBoundingClientRect() canvas鼠标位置自身的方法
+        window.onload = function() {
+            var canvas = document.getElementById('canvas');
+            canvas.addEventListener('mousedown', event => {
+                var event = event || window.event;
+                var winX = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft || event.pageX;
+                var winY = event.clientY + document.body.scrollTop + document.documentElement.scrollTop || event.pageY;
+                // 定义一个对象
+                var can = {x:0,y:0};
+                // 调用getBoundingClientRect方法，该方法返回一个对象，包含canvas的left、top、width、height等值
+                var canBox = canvas.getBoundingClientRect();
+                
+                //（canvas.width/canBox.width）：一般来说canvas.width和canBox.width是一样的，也就是说这两个的比值为1.但不排除你会为canvas设置边框，这是实际的坐标位置就会有所变化，比如canvas.width = 500, 你可能设置了一个1px的边框，那么canBox.width = 502, 所以比值就不为1了。这样做只是让数据更精确。
+                can.x = (winX - canBox.left)*(canvas.width/canBox.width);
+                can.y = (winY - canBox.top)*(canvas.height/canBox.height);
+
+                console.log(can.x, can.y);
+            })
+        }
+    </script>
+</body>
+</html>
