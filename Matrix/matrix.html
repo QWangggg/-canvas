@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Matrix</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var canvas = document.getElementById('canvas'),
+            ctx = canvas.getContext('2d'),
+            w = canvas.width = window.innerWidth,
+            h = canvas.height = window.innerHeight;
+
+        // 初始化
+        var clearColor = 'rgba(0, 0, 0, .1)', // 用于绘制渐变阴影
+            wordColor = '#33ff33', // 文字颜色
+            words = "0123456789qwertyuiopasdfghjklzxcvbnm,./;'\[]QWERTYUIOPASDFGHJKLZXCVBNM<>?:{}|",
+            wordsArr = words.split(''),
+            font_size = 16,
+            clumns = w / font_size, // 文字降落的列数
+            drops = [];
+        
+        for (var i=0; i<clumns; i++) {
+            drops[i] = 1;
+        }
+
+        function draw() {
+            ctx.save();
+            ctx.fillStyle = wordColor;
+            ctx.font = font_size + "px arial";
+            // 核心
+            for (var i = 0; i < drops.length; i++) {
+                var text = wordsArr[Math.floor(Math.random() * wordsArr.length)];
+                ctx.fillText(text, i * font_size, drops[i] * font_size);
+                if (drops[i] * font_size > h && Math.random() > 0.98) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+            ctx.restore()
+        }
+
+        // 动画循环
+        (function drawFrame(){
+            window.requestAnimationFrame(drawFrame, canvas);
+            ctx.fillStyle = clearColor;
+            ctx.fillRect(0,0,w,h);
+            draw();
+        }())
+
+    </script>
+</body>
+</html>
