@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>plusing-motion</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script src="../utils/utils.js"></script>
+    <script src="./ball.js"></script>
+    <script>
+        window.onload = function() {
+            var canvas = document.getElementById('canvas'),
+                ctx = canvas.getContext('2d');
+            
+            var speed = 40,
+                r = 20,
+                rspeed = 0.02,
+                angle = 0;
+                
+            var ball = new Ball();
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame, canvas);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // ball.radius = r + Math.sin(angle)*speed;
+                ball.scaleX = Math.abs(Math.sin(angle)*speed)
+                ball.x = canvas.width/2;
+                ball.y = canvas.height/2;
+                angle += rspeed;
+                ball.draw(ctx);
+            }())
+        }
+    </script>
+</body>
+</html>
