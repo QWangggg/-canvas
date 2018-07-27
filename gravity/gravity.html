@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gravity</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500" style="background:#000;"></canvas>
+    <script src="../ball.js"></script>
+    <script src="../utils/utils.js"></script>
+    <script>
+        window.onload = function () {
+            var canvas = document.getElementById('canvas'),
+                ctx = canvas.getContext('2d');
+
+            var damp = -0.8,
+                gravity = 0.1,
+                velocity = 0;
+
+            var ball = new Ball(canvas.width/2, canvas.height/3,25, 'orange');
+
+            function crash(ball) {
+                if (ball.y + ball.radius > canvas.height) {
+                    ball.y = canvas.height - ball.radius
+                    velocity = velocity*damp;
+                }
+            }
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame, canvas);
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                velocity += gravity;
+                ball.y += velocity;
+                crash(ball);
+                ball.draw(ctx);
+            }())
+        }
+    </script>
+</body>
+</html>

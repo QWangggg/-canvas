@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>accelerated-speed</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500" style="background:#000;"></canvas>
+    <script src="../utils/utils.js"></script>
+    <script src="../linear-vertical-motion/ball.js"></script>
+    <script>
+        window.onload = function() {
+            var canvas = document.getElementById('canvas'),
+                ctx = canvas.getContext('2d');
+
+            var aX = 0.01,
+                aY = 0.02,
+                velocityX = 0.01,
+                velocityY = 0.005;
+
+            var ball = new Ball(-25, canvas.height/2, 25);
+
+            (function drawFrame(){
+                window.requestAnimationFrame(drawFrame, canvas);
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                velocityX += aX;
+                velocityY += aY;
+                ball.x += velocityX;
+                ball.y += velocityY;
+                ball.x = ball.x - 25 > canvas.width?-25:ball.x;
+                ball.y = ball.y - 25 > canvas.height?-25:ball.y;
+                velocityX = velocityX>10?0:velocityX;
+                velocityY = velocityY>10?0:velocityY;
+                ball.draw(ctx);
+            }())
+        }
+    </script>
+</body>
+</html>
