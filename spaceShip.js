@@ -8,24 +8,24 @@ class SpaceShip {
     }
 
     init(ctx) {
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1;
         ctx.strokeStyle = this.shipColor;
         ctx.beginPath();
-        ctx.moveTo(this.x+10,this.y);
-        ctx.lineTo(this.x-15,this.y+10);
-        ctx.lineTo(this.x-5,this.y);
-        ctx.lineTo(this.x-15,this.y-10);
-        ctx.lineTo(this.x+10,this.y);
+        ctx.moveTo(10,0);
+        ctx.lineTo(-15,10);
+        ctx.lineTo(-5,0);
+        ctx.lineTo(-15,-10);
+        ctx.lineTo(+10,0);
         ctx.stroke();
     }
 
     fireInit(ctx) {
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1;
         ctx.strokeStyle = this.fireColor;
         ctx.beginPath();
-        ctx.moveTo(this.x-7,this.y+2);
-        ctx.lineTo(this.x-9, this.y);
-        ctx.lineTo(this.x-7,this.y-2);
+        ctx.moveTo(-7,+2);
+        ctx.lineTo(-9, 0);
+        ctx.lineTo(-7,-2);
         ctx.stroke();
     }
 
@@ -33,9 +33,9 @@ class SpaceShip {
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
-        init(ctx);
+        this.init(ctx);
         if (showFire) {
-            fireInit(ctx);
+            this.fireInit(ctx);
         }
         ctx.restore();
     }

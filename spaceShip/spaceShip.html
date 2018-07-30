@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SpaceShip</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500" style="background:#000;"></canvas>
+    <script src="../spaceShip.js"></script>
+    <script src="../utils/utils.js"></script>
+    <script>
+        window.onload = function() {
+            var canvas = document.getElementById('canvas'),
+                ctx = canvas.getContext('2d');
+
+            var ship = new SpaceShip();
+            ship.x = 100;
+            ship.y = 100;
+
+            var aX = 1,
+                aY = 1,
+                rotation = 0,
+                angluarV = 0.1,
+                velocityX = 0,
+                velocityY = 0,
+                frame = false;
+
+            document.body.addEventListener('keydown', e => {
+                switch (e.code) {
+                    case 'ArrowUp': 
+                        velocityX = Math.cos(ship.rotation);
+                        // rotation += angluarV;
+                        break;
+                    case 'ArrowDown':
+                        velocityY = Math.sin(ship.rotation);
+                        // rotation -= angluarV;
+                        break;
+                    case 'ArrowLeft':
+                        rotation += angluarV;
+                        break;
+                    case 'ArrowRight':
+                        rotation -= angluarV;
+                        break;
+                }
+                console.log(ship.x);
+                drawFrame();
+            })
+
+            document.body.addEventListener('keyon', e=>{
+                console.log(e);
+            })
+
+            document.body.addEventListener('keyup', e => {
+                switch (e.code) {
+                    case 'ArrowUp': 
+                        // velocityX = 0;
+                        break;
+                    case 'ArrowDown':
+                        velocityY = 0;
+                        break;
+                    case 'ArrowLeft':
+                        break;
+                    case 'ArrowRight':
+                        break;
+                }
+            })
+
+            function drawFrame(){
+                // window.requestAnimationFrame(drawFrame, canvas);
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                ship.x += velocityX;
+                ship.y += velocityY;
+                ship.rotation = rotation;
+                ship.draw(ctx, true);
+            }
+        }
+    </script>
+</body>
+</html>
